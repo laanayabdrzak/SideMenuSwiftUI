@@ -51,14 +51,16 @@ struct SideMenuView: View {
                     
                     Spacer()
                 }
-                .transition(.move(edge: .leading))
+                .transition(.move(edge: isShowing ? .leading : .trailing))
             }
         }
         .animation(.easeInOut, value: isShowing)
         .onChange(of: selectedOption) {
             if let selectedOption = selectedOption {
-                isShowing = false
                 selectedTab = selectedOption.rawValue
+                withAnimation(.snappy(duration: 2.0)) {
+                    isShowing = false
+                }
             }
         }
         .onAppear() {
